@@ -1,7 +1,10 @@
 #include "Style.h"
+
+#include "Enum.h"
+
+#include "Layer/LayerFactory.h"
 #include "Layer/Layer.h"
-#include "Layout/Layout.h"
-#include "Filter/Filter.h"
+#include "Sprite/Sprite.h"
 
 namespace StyleJson
 {
@@ -11,45 +14,83 @@ namespace StyleJson
 	Style::~Style()
 	{}
 
-	rapidjson::Value Style::Serialize()
+	bool Style::Deserialize(const rapidjson::Value& _rawStyle)
 	{
-		rapidjson::Value seValue;
+		for (const auto& enumPair : Enum::Root::PROPERTY_LIST)
+		{
+			if (_rawStyle.HasMember(enumPair.strType))
+			{
+				if (Enum::Root::eProperty::eProperty_Layers == enumPair.eType)
+				{
+					const auto& rawLayerList = _rawStyle[enumPair.strType];
+					if (rawLayerList.IsArray())
+					{
+						for (const auto& rawLayer : rawLayerList.GetArray())
+						{
+							std::shared_ptr<Layer> spLayer = LayerFactory::GetInstance().Create(rawLayer);
+							if (spLayer && spLayer->Deserialize(rawLayer))
+							{
+								AddLayer(spLayer);
+							}
+						}
+					}
+				}
+				else if (Enum::Root::eProperty::eProperty_Sprite == enumPair.eType)
+				{
+					std::shared_ptr<Sprite> spSprite = std::make_shared<Sprite>();
+					if (spSprite->Deserialize(_rawStyle[enumPair.strType]))
+					{
+						AddSprite(spSprite);
+					}
+				}
+				else
+				{
+					// TODO
+				}
+			}
+		}
 
-		return seValue;
+		if (m_vLayers.empty() && (!m_spSprite))
+		{
+			return false;
+		}
+
+		return true;
 	}
 
-	bool Style::Deserialize(const rapidjson::Value& _jsonValue)
+	const std::shared_ptr<Sprite> Style::GetSprite() const
 	{
-		return true;
+		return m_spSprite;
+	}
+
+	const std::shared_ptr<Layer> Style::GetLayer(const std::string& _layer) const
+	{
+		for (const auto& layer : m_vLayers)
+		{
+			if (layer->GetID() == _layer)
+			{
+				return layer;
+			}
+		}
+		return nullptr;
+	}
+
+	const std::vector<std::shared_ptr<Layer>> Style::GetLayers() const
+	{
+		return m_vLayers;
 	}
 
 	void Style::AddLayer(std::shared_ptr<Layer> _spLayer)
 	{
-		if (!_spLayer)
+		m_vLayers.push_back(_spLayer);
+	}
+
+	void Style::AddSprite(std::shared_ptr<Sprite> _spSprite)
+	{
+		if (m_spSprite)
 		{
-			return;
+			m_spSprite.reset();
+			m_spSprite = nullptr;
 		}
-
-		m_spLayer = _spLayer;
-	}
-
-	const std::shared_ptr<Layer> Style::GetLayer() const
-	{
-		return m_spLayer;
-	}
-
-	void Style::AddLayout(std::shared_ptr<Layout> _spLayout)
-	{
-		if (!_spLayout)
-		{
-			return;
-		}
-
-		m_spLayout = _spLayout;
-	}
-
-	const std::shared_ptr<Layout> Style::GetLayout() const
-	{
-		return m_spLayout;
 	}
 }

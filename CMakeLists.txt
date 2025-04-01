@@ -24,35 +24,55 @@ SET(STYLEJSON_DIR ${MAIN_DIR}/StyleJson)
 
 ## Source Files
 LIST( APPEND SRCS
-    ${MAIN_DIR}/main.cpp
+	${MAIN_DIR}/main.cpp
 
-    ${MAIN_DIR}/StyleJson/Style.h   ${MAIN_DIR}/StyleJson/Style.cpp
-    ${MAIN_DIR}/StyleJson/StyleInfo.h
-    ${MAIN_DIR}/StyleJson/StyleJsonBase.h
+	${MAIN_DIR}/StyleJson/Base.h
+	${MAIN_DIR}/StyleJson/Enum.h
+	${MAIN_DIR}/StyleJson/FactoryBase.h
+	${MAIN_DIR}/StyleJson/Parser.h  			${MAIN_DIR}/StyleJson/Parser.cpp
+	${MAIN_DIR}/StyleJson/Style.h   			${MAIN_DIR}/StyleJson/Style.cpp
 
-    ${MAIN_DIR}/StyleJson/Expression/Expression.h
-    ${MAIN_DIR}/StyleJson/Filter/Filter.h
+	${MAIN_DIR}/StyleJson/Expression/Expression.h
+	${MAIN_DIR}/StyleJson/Expression/AllExpression.h		${MAIN_DIR}/StyleJson/Expression/AllExpression.cpp
+	${MAIN_DIR}/StyleJson/Expression/GetExpression.h		${MAIN_DIR}/StyleJson/Expression/GetExpression.cpp
+	${MAIN_DIR}/StyleJson/Expression/MatchExpression.h		${MAIN_DIR}/StyleJson/Expression/MatchExpression.cpp
+	${MAIN_DIR}/StyleJson/Expression/ExpressionFactory.h	${MAIN_DIR}/StyleJson/Expression/ExpressionFactory.cpp
 
-    ${MAIN_DIR}/StyleJson/Layer/Layer.h
-    ${MAIN_DIR}/StyleJson/Layout/Layout.h
+	${MAIN_DIR}/StyleJson/Filter/Filter.h		${MAIN_DIR}/StyleJson/Filter/Filter.cpp
 
-    ${MAIN_DIR}/StyleJson/Property/Property.h
-    
-    ${MAIN_DIR}/StyleJson/Variant/Variant.h
+	${MAIN_DIR}/StyleJson/Image/Image.h
+
+	${MAIN_DIR}/StyleJson/Layer/Layer.h			${MAIN_DIR}/StyleJson/Layer/Layer.cpp
+	${MAIN_DIR}/StyleJson/Layer/FillLayer.h		${MAIN_DIR}/StyleJson/Layer/FillLayer.cpp 
+	${MAIN_DIR}/StyleJson/Layer/LineLayer.h 	${MAIN_DIR}/StyleJson/Layer/LineLayer.cpp
+	${MAIN_DIR}/StyleJson/Layer/SymbolLayer.h   ${MAIN_DIR}/StyleJson/Layer/SymbolLayer.cpp
+	${MAIN_DIR}/StyleJson/Layer/LayerFactory.h	${MAIN_DIR}/StyleJson/Layer/LayerFactory.cpp
+
+	${MAIN_DIR}/StyleJson/Layout/Layout.h
+
+	${MAIN_DIR}/StyleJson/Paint/Paint.h		
+
+	${MAIN_DIR}/StyleJson/Property/Property.h
+	${MAIN_DIR}/StyleJson/Property/PropertyConverter.h
+	${MAIN_DIR}/StyleJson/Property/PropertyMap.h
+	${MAIN_DIR}/StyleJson/Property/PropertyType.h
+	${MAIN_DIR}/StyleJson/Property/PropertyValue.h
+
+	${MAIN_DIR}/StyleJson/Sprite/Sprite.h				${MAIN_DIR}/StyleJson/Sprite/Sprite.cpp
 )
 
 ## Header Filtes
 LIST( APPEND INCS
-    ${STYLEJSON_DIR}
+	${STYLEJSON_DIR}
 )
 
 MESSAGE( STATUS "FILE : Source File List")
 FOREACH( source ${SRCS} )
-    MESSAGE( STATUS "FILE : Source File ${source}" )   
+	MESSAGE( STATUS "FILE : Source File ${source}" )   
 ENDFOREACH()
 MESSAGE( STATUS "FILE : Header Folder List")
 FOREACH( header ${INCS} )
-    MESSAGE( STATUS "FILE : Header Folder ${header}" )   
+	MESSAGE( STATUS "FILE : Header Folder ${header}" )   
 ENDFOREACH()
 MESSAGE( STATUS "FILE : Setting Done ")
 # ----------------------------------------------- #
@@ -64,15 +84,15 @@ MESSAGE( STATUS "OPTION : Add Executable by platform")
 
 ## Include Header Directories for Target Files
 IF ( WIN32 )
-    ADD_EXECUTABLE( ${PROJECT_NAME} WIN32 ${SRCS} )
-    SET( STATIC_LIB lib )
-    SET( DYNAMIC_LIB dll )
-    SET( PLATFORM "Windows" )
+	ADD_EXECUTABLE( ${PROJECT_NAME} WIN32 ${SRCS} )
+	SET( STATIC_LIB lib )
+	SET( DYNAMIC_LIB dll )
+	SET( PLATFORM "Windows" )
 ELSE ()
-    ADD_EXECUTABLE( ${PROJECT_NAME} ${SRCS} )
-    SET( STATIC_LIB a )
-    SET( DYNAMIC_LIB so )
-    SET( PLATFORM "Other")
+	ADD_EXECUTABLE( ${PROJECT_NAME} ${SRCS} )
+	SET( STATIC_LIB a )
+	SET( DYNAMIC_LIB so )
+	SET( PLATFORM "Other")
 ENDIF()
 
 MESSAGE( STATUS "OPTION : Platform ${PLATFORM}")
@@ -97,6 +117,8 @@ SET( EXT_LIB_DIR ${MAIN_DIR}/build/lib )
 SET( EXT_BIN_DIR ${MAIN_DIR}/build/${CMAKE_BUILD_TYPE} )
 SET( EXT_ARC_DIR ${MAIN_DIR}/build/arc )
 
+LIST( APPEND DEP_INCLUDE ${EXT_INCLUDE_DIR} )
+
 MESSAGE( STATUS "EXT-PROJECT : Include Directory ${EXT_INCLUDE_DIR}")
 MESSAGE( STATUS "EXT-PROJECT : Library Directory ${EXT_LIB_DIR}")
 MESSAGE( STATUS "EXT-PROJECT : Binary Directory ${EXT_BIN_DIR}")
@@ -119,19 +141,41 @@ EXTERNALPROJECT_ADD(
 		-DINCLUDE_DIR=${EXT_INCLUDE_DIR}
 		-DLIB_DIR=${EXT_LIB_DIR}
 		-DBIN_DIR=${EXT_BIN_DIR}
-        -DARC_DIR=${EXT_ARC_DIR}
+		-DARC_DIR=${EXT_ARC_DIR}
 		-DCMAKE_BUILD_TYPE=Debug
 		-DBUILD_STATIC_LIBRARY=OFF
  		-DINSTALL_DEMO_FILE=OFF 
 )
 
 LIST( APPEND DEP_LIST LogProject )
-LIST( APPEND DEP_INCLUDE ${EXT_INCLUDE_DIR} )
 LIST( APPEND DEP_LIBS ${EXT_ARC_DIR}/LogProject.${STATIC_LIB} )
 
 MESSAGE( STATUS "EXT-PROJECT : Download LogProject" )
 # ----------------------------------------------- #
 
+
+
+# ------ Download Variant from Github ------ #
+MESSAGE(STATUS "EXT-PROJECT : Download Variant")
+ExternalProject_Add(
+	Variant
+	GIT_REPOSITORY https://github.com/Winteradio/Variant.git
+
+	PREFIX ${CMAKE_BINARY_DIR}/Prefix/Variant
+	
+	CONFIGURE_COMMAND "" BUILD_COMMAND "" INSTALL_COMMAND "" UPDATE_COMMAND ""
+)
+
+ADD_CUSTOM_COMMAND(
+	TARGET Variant
+	POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/include/Variant
+	COMMAND ${CMAKE_COMMAND} -E copy_directory
+		${CMAKE_BINARY_DIR}/Prefix/Variant/src/Variant/include
+		${CMAKE_BINARY_DIR}/include/Variant
+	COMMENT "Copying Variant headers to ${CMAKE_BINARY_DIR}/include/Variant"
+)
+# ------ Download Variant from Github ------ #
 
 
 
@@ -146,23 +190,22 @@ EXTERNALPROJECT_ADD(
 	UPDATE_COMMAND "" PATCH_COMMAND "" TEST_COMMAND "" INSTALL_COMMAND ""
 	CMAKE_ARGS 
 		-DCMAKE_BUILD_TYPE=Debug
-        -DRAPIDJSON_BUILD_DOC=OFF
-        -DRAPIDJSON_BUILD_EXAMPLES=OFF
-        -DRAPIDJSON_BUILD_TESTS=OFF
-        -DRAPIDJSON_BUILD_CXX17=ON
+		-DRAPIDJSON_BUILD_DOC=OFF
+		-DRAPIDJSON_BUILD_EXAMPLES=OFF
+		-DRAPIDJSON_BUILD_TESTS=OFF
+		-DRAPIDJSON_BUILD_CXX17=ON
 )
 
 LIST( APPEND DEP_LIST RapidJson )
-LIST( APPEND DEP_INCLUDE ${EXT_INCLUDE_DIR} )
 
 ADD_CUSTOM_COMMANd(
-    TARGET RapidJson
-    POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/include/RapidJson
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${CMAKE_BINARY_DIR}/Prefix/RapidJson/src/RapidJson/include
-        ${CMAKE_BINARY_DIR}/include/RapidJson
-    COMMENT "EXT-PROJECT : RapidJson / Copying RapidJson Header to ${CMAKE_BINARY_DIR}/include/RapidJson"
+	TARGET RapidJson
+	POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/include/RapidJson
+	COMMAND ${CMAKE_COMMAND} -E copy_directory
+		${CMAKE_BINARY_DIR}/Prefix/RapidJson/src/RapidJson/include
+		${CMAKE_BINARY_DIR}/include/RapidJson
+	COMMENT "EXT-PROJECT : RapidJson / Copying RapidJson Header to ${CMAKE_BINARY_DIR}/include/RapidJson"
 )
 
 MESSAGE( STATUS "EXT-PROJECT : Download RapidJson")
@@ -191,20 +234,20 @@ MESSAGE(STATUS "EXEFILE - Set Options for Target Files")
 SET( EXE_DIR ${MAIN_DIR}/build )
 
 IF ( CMAKE_BUILD_TYPE MATCHES Debug )
-    SET_TARGET_PROPERTIES( ${PROJECT_NAME} PROPERTIES
-        RUNTIME_OUTPUT_DIRECTORY_DEBUG ${EXE_DIR}/Debug
-    )
-    MESSAGE( STATUS "EXEFILE - Build exe file on Debug mode" )
+	SET_TARGET_PROPERTIES( ${PROJECT_NAME} PROPERTIES
+		RUNTIME_OUTPUT_DIRECTORY_DEBUG ${EXE_DIR}/Debug
+	)
+	MESSAGE( STATUS "EXEFILE - Build exe file on Debug mode" )
 ELSEIF ( CMAKE_BUILD_TYPE MATCHES Release )
-    SET_TARGET_PROPERTIES( ${PROJECT_NAME} PROPERTIES
-        RUNTIME_OUTPUT_DIRECTORY_RELEASE ${EXE_DIR}/Release
-    )
-    MESSAGE( STATUS "EXEFILE - Build exe file on Release mode" )
+	SET_TARGET_PROPERTIES( ${PROJECT_NAME} PROPERTIES
+		RUNTIME_OUTPUT_DIRECTORY_RELEASE ${EXE_DIR}/Release
+	)
+	MESSAGE( STATUS "EXEFILE - Build exe file on Release mode" )
 ELSE()
-    SET_TARGET_PROPERTIES( ${PROJECT_NAME} PROPERTIES
-        RUNTIME_OUTPUT_DIRECTORY ${EXE_DIR}
-    )
-    MESSAGE( STATUS "EXEFILE - Build exe file on Other mode" )
+	SET_TARGET_PROPERTIES( ${PROJECT_NAME} PROPERTIES
+		RUNTIME_OUTPUT_DIRECTORY ${EXE_DIR}
+	)
+	MESSAGE( STATUS "EXEFILE - Build exe file on Other mode" )
 ENDIF()
 
 MESSAGE( STATUS "EXEFILE - Setting Done ")

@@ -2,13 +2,15 @@
 #define __STYLEJSON_STYLE_H__
 
 #include <memory>
-#include "StyleJsonBase.h"
+#include <vector>
+#include <string>
+
+#include "Base.h"
 
 namespace StyleJson
 {
 	class Layer;
-	class Layout;
-	class Filter;
+	class Sprite;
 
 	class Style : public Base
 	{
@@ -17,23 +19,33 @@ namespace StyleJson
 			virtual ~Style();
 
 		public :
-			rapidjson::Value Serialize() override;
-			bool Deserialize(const rapidjson::Value& _jsonValue) override;
+			bool Deserialize(const rapidjson::Value& _rawStyle) override;
 
-		public :
-			void AddLayer(std::shared_ptr<Layer> _spLayer);
-			const std::shared_ptr<Layer> GetLayer() const;
+			const std::shared_ptr<Sprite> GetSprite() const;
+			const std::shared_ptr<Layer> GetLayer(const std::string& _layerID) const;
+			const std::vector<std::shared_ptr<Layer>> GetLayers() const;
 
-			void AddLayout(std::shared_ptr<Layout> _spLayout);
-			const std::shared_ptr<Layout> GetLayout() const;
+			template<typename T>
+			const std::shared_ptr<T> GetLayerAs(const std::string& _layerID) const
+			{
+				for (const auto& spLayer : m_vLayers)
+				{
+					if (spLayer && (spLayer->GetID() == _layerID) && (spLayer->GetType() == T::GetType()))
+					{
+						return reinterpret_cast<T*>(spLayer);
+					}
+				}
 
-			void AddFilter(std::shared_ptr<Filter> _spFilter);
-			const std::shared_ptr<Filter> GetFilter() const;
+				return nullptr;
+			}
 
 		private :
-			std::shared_ptr<Layer> m_spLayer;
-			std::shared_ptr<Layout> m_spLayout;
-			std::shared_ptr<Filter> m_spFilter;
+			void AddLayer(std::shared_ptr<Layer> _spLayer);
+			void AddSprite(std::shared_ptr<Sprite> _spSprite);
+
+		private :
+			std::vector<std::shared_ptr<Layer>> m_vLayers;
+			std::shared_ptr<Sprite> m_spSprite;
 	};
 };
 
