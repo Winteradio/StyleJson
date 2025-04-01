@@ -5,6 +5,8 @@
 
 namespace StyleJson
 {
+	class Undefined {};
+
 	class Base
 	{
 		public :
@@ -12,7 +14,6 @@ namespace StyleJson
 			virtual ~Base() {};
 
 		public :
-			virtual rapidjson::Value Serialize() = 0;
 			virtual bool Deserialize(const rapidjson::Value& _jsonValue) = 0;
 	};
 };
