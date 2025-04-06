@@ -52,8 +52,8 @@ namespace StyleJson
 		return false;
 	}
 
-	Expression::Value MatchExpression::Evaluate(const PropertyFeatureMap& _featureMap)
+	const ExpressionValue MatchExpression::Evaluate(const PropertyFeatureMap& _featureMap)
 	{
-		return Expression::Value();
+		return ExpressionValue();
 	}
 }

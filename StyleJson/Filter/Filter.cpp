@@ -1,6 +1,7 @@
 #include "Filter/Filter.h"
 
 #include "Expression/Expression.h"
+#include "Expression/ExpressionValue.h"
 #include "Expression/ExpressionFactory.h"
 
 namespace StyleJson
@@ -33,13 +34,13 @@ namespace StyleJson
 		}
 
 		const auto expValue = m_spExpression->Evaluate(_featureMap);
-		if (!expValue.Is<bool>())
+		if (!expValue.GetData().Is<bool>())
 		{
 			return false;
 		}
 		else
 		{
-			return expValue.Get<bool>();
+			return expValue.GetData().Get<bool>();
 		}
 	}
 }

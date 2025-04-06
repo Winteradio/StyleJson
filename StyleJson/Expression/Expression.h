@@ -6,11 +6,11 @@
 
 #include <string>
 #include <vector>
-#include <memory>
 
 namespace StyleJson
 {
 	class PropertyFeatureMap;
+	class ExpressionValue;
 
 	class Expression : public Base
 	{
@@ -30,19 +30,7 @@ namespace StyleJson
 
 		public :
 			virtual bool Deserialize(const rapidjson::Value& _rawExpression) = 0;
-			virtual Value Evaluate(const PropertyFeatureMap& _featureMap) = 0;
-	};
-};
-
-namespace std
-{
-	template<>
-	struct hash<StyleJson::Expression::Value>
-	{
-		size_t operator()(const StyleJson::Expression::Value& _value) const
-		{
-			return _value.GetHash();
-		}
+			virtual const ExpressionValue Evaluate(const PropertyFeatureMap& _featureMap) = 0;
 	};
 };
 

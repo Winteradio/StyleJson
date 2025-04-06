@@ -4,6 +4,7 @@
 #include <unordered_set>
 
 #include "Expression/Expression.h"
+#include "Expression/ExpressionValue.h"
 
 namespace StyleJson
 {
@@ -15,13 +16,13 @@ namespace StyleJson
 			
 		public :
 			bool Deserialize(const rapidjson::Value& _rawExpression) final;
-			Value Evaluate(const PropertyFeatureMap& _featureMap) final;
+			const ExpressionValue Evaluate(const PropertyFeatureMap& _featureMap) final;
 
 		private :
 			struct stMatchEntry
 			{
-				std::unordered_set<Value> InputKeys;
-				Value OutputValue;
+				std::unordered_set<ExpressionValue> InputKeys;
+				ExpressionValue OutputValue;
 
 				stMatchEntry();
 			};

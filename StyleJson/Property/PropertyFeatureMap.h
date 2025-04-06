@@ -1,15 +1,12 @@
 #ifndef __STYLEJSON_PROPERTYFEATUREMAP_H__
 #define __STYLEJSON_PROPERTYFEATUREMAP_H__
 
+#include "Expression/ExpressionValue.h"
 #include <unordered_map>
-#include <string>
 
-#include "Variant/Variant.h"
 
 namespace StyleJson
 {
-	using PropertyFeature = wtr::Variant<bool, int, float, double, std::string>;
-
 	class PropertyFeatureMap
 	{
 		public :
@@ -22,17 +19,34 @@ namespace StyleJson
 			template<typename T>
 			void Add(const std::string& _name, const T& _property)
 			{
-				m_propertyFeatureMap[_name].Set<T>(_property);
+				auto itr = m_propertyFeatureMap.find(_name);
+				if (itr != m_propertyFeatureMap.end())
+				{
+					ExpressionValue expressionValue;
+					expressionValue.Set<T>(_property);
+				}
+				else
+				{
+					itr->second.GetData().Set<T>(_property);
+				}
 			}
 
-			template<typename T>
-			const T& Get(const std::string& _name) const
+			const ExpressionValue& Get(const std::string& _name) const
 			{
-				return m_propertyFeatureMap.at(_name).Get<T>();
+				const auto itr = m_propertyFeatureMap.find(_name);
+				if (itr != m_propertyFeatureMap.end())
+				{
+					return itr->second;
+				}
+				else
+				{
+					static ExpressionValue nullValue;
+					return nullValue;
+				}
 			}
 
 		private :
-			std::unordered_map<std::string, PropertyFeature> m_propertyFeatureMap;
+			std::unordered_map<std::string, ExpressionValue> m_propertyFeatureMap;
 	};
 };
 

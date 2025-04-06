@@ -38,9 +38,9 @@ namespace StyleJson
 		}
 	}
 
-	Expression::Value AllExpression::Evaluate(const PropertyFeatureMap& _featureMap)
+	const ExpressionValue AllExpression::Evaluate(const PropertyFeatureMap& _featureMap)
 	{
 
-		return Expression::Value();
+		return ExpressionValue();
 	}
 }

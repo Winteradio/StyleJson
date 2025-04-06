@@ -33,6 +33,7 @@ LIST( APPEND SRCS
 	${MAIN_DIR}/StyleJson/Style.h   			${MAIN_DIR}/StyleJson/Style.cpp
 
 	${MAIN_DIR}/StyleJson/Expression/Expression.h
+	${MAIN_DIR}/StyleJson/Expression/ExpressionValue.h		${MAIN_DIR}/StyleJson/Expression/ExpressionValue.cpp
 	${MAIN_DIR}/StyleJson/Expression/AllExpression.h		${MAIN_DIR}/StyleJson/Expression/AllExpression.cpp
 	${MAIN_DIR}/StyleJson/Expression/GetExpression.h		${MAIN_DIR}/StyleJson/Expression/GetExpression.cpp
 	${MAIN_DIR}/StyleJson/Expression/MatchExpression.h		${MAIN_DIR}/StyleJson/Expression/MatchExpression.cpp

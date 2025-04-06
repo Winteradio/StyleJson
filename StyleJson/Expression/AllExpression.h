@@ -2,6 +2,7 @@
 #define __STYLEJSON_ALLEXPRESSION_H__
 
 #include "Expression/Expression.h"
+#include "Expression/ExpressionValue.h"
 
 namespace StyleJson
 {
@@ -13,7 +14,7 @@ namespace StyleJson
 			
 		public :
 			bool Deserialize(const rapidjson::Value& _rawExpression) final;
-			Value Evaluate(const PropertyFeatureMap& _featureMap) final;
+			const ExpressionValue Evaluate(const PropertyFeatureMap& _featureMap) final;
 
 		private :
 			using ExpressionList = std::vector<std::shared_ptr<Expression>>;
