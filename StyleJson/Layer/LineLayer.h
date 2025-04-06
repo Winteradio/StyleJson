@@ -21,8 +21,8 @@ namespace StyleJson
 			bool DeserializeLayout(const rapidjson::Value& _rawLayout) final;
 
 		private :
-			std::shared_ptr<Paint::LinePaintProperty> m_spPaintProperty;
-			std::shared_ptr<Layout::LineLayoutProperty> m_spLayoutProperty;
+			Paint::LinePaintProperty m_paintProperty;
+			Layout::LineLayoutProperty m_layoutProperty;
 	};
 };
 

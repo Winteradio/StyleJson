@@ -13,7 +13,7 @@ namespace StyleJson
 		using Value = wtr::Variant<Undefined, T, std::shared_ptr<Expression>>;
 
 		public :
-			PropertyValue() = delete;
+			PropertyValue() = default;
 			PropertyValue(const T& _constant)
 				: m_Value(_constant)
 			{}
@@ -25,6 +25,21 @@ namespace StyleJson
 			virtual ~PropertyValue() {};
 
 		public :
+			void Set(const T& _value)
+			{
+				m_Value.Set<T>(_value);
+			}
+
+			void Set(T&& _value)
+			{
+				m_Value.Set<T>(std::move(_value));
+			}
+
+			void Set(const std::shared_ptr<Expression>& _expression)
+			{
+				m_Value.Set<std::shared_ptr<Expression>(_expression);
+			}
+			
 			bool IsUndefined()
 			{
 				return m_Value.Is<Undefined>;

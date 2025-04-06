@@ -8,15 +8,15 @@ namespace StyleJson
 {
 	namespace Paint
 	{
-		class LinePaintColor : public PropertyValue<Color> {};
-		class LinePaintWidth : public PropertyValue<float> {};
+		struct LinePaintColor : PropertyValue<Color> {};
+		struct LinePaintWidth : PropertyValue<float> {};
 	
-		class LinePaintProperty : public Property<LinePaintColor
-												, LinePaintWidth> {};
+		using LinePaintProperty = Property<LinePaintColor
+										, LinePaintWidth>;
 	
-		class FillPaintColor : public PropertyValue<float> {};
+		struct FillPaintColor : PropertyValue<float> {};
 	
-		class FillPaintProperty : public Property<FillPaintColor> {};
+		using FillPaintProperty = Property<FillPaintColor>;
 	};
 };
 

@@ -9,7 +9,7 @@ namespace StyleJson
 	class Property
 	{
 		public :
-			Property() = delete;
+			Property() = default;
 			Property(const Args&... _args)
 				: m_property(std::forward<_args>(...))
 			{}
