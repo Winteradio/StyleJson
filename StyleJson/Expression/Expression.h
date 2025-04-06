@@ -15,16 +15,6 @@ namespace StyleJson
 	class Expression : public Base
 	{
 		public :
-			struct Value;
-			using ValueList = std::vector<Value>;
-			using ValueBase = wtr::Variant<bool, int, float, double, std::string, ValueList>;
-
-			struct Value : public ValueBase
-			{
-				using ValueBase::ValueBase;
-			};
-
-		public :
 			Expression() {};
 			virtual ~Expression() {};
 

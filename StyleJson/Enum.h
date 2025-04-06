@@ -145,11 +145,9 @@ namespace StyleJson
 					eProperty_FillOpacity,
 					eProperty_FillOutlineColor,
 					eProperty_FillPattern,
-					eProperty_FillSortKey,
 					eProperty_FillTranslate,
 					eProperty_FillTranslateAnchor,
 					eProperty_FillZOffset,
-					eProperty_Visibility,
 					eProperty_End
 				};
 		
@@ -161,22 +159,132 @@ namespace StyleJson
 					{eProperty::eProperty_FillOpacity, "fill-opacity"},
 					{eProperty::eProperty_FillOutlineColor, "fill-outline-color"},
 					{eProperty::eProperty_FillPattern, "fill-pattern"},
-					{eProperty::eProperty_FillSortKey, "fill-sort-key"},
 					{eProperty::eProperty_FillTranslate, "fill-translate"},
 					{eProperty::eProperty_FillTranslateAnchor, "fill-translate-anchor"},
 					{eProperty::eProperty_FillZOffset, "fill-z-offset"},
-					{eProperty::eProperty_Visibility, "visibility"}
 				}};
 			};
 
 			namespace Line
 			{
-
+				enum class eProperty {
+					eProperty_None = 0,
+					eProperty_LineBlur,
+					eProperty_LineColor,
+					eProperty_LineCrossSlope,
+					eProperty_LineDasharray,
+					eProperty_LineElevationReference,
+					eProperty_LineEmissiveStrength,
+					eProperty_LineGapWidth,
+					eProperty_LineGradient,
+					eProperty_LineJoin,
+					eProperty_LineMiterLimit,
+					eProperty_LineOcclusionOpacity,
+					eProperty_LineOffset,
+					eProperty_LineOpacity,
+					eProperty_LinePattern,
+					eProperty_LineRoundLimit,
+					eProperty_LineTranslate,
+					eProperty_LineTranslateAnchor,
+					eProperty_LineTrimColor,
+					eProperty_LineTrimFadeRange,
+					eProperty_LineTrimOffset,
+					eProperty_LineWidth,
+					eProperty_End
+				};
+		
+				constexpr std::array<EnumPair<eProperty>, static_cast<size_t>(eProperty::eProperty_End)> PAINT_PROPERTY_LIST = {{
+					{eProperty::eProperty_None, "none"},
+					{eProperty::eProperty_LineBlur, "line-blur"},
+					{eProperty::eProperty_LineColor, "line-color"},
+					{eProperty::eProperty_LineCrossSlope, "line-cross-slope"},
+					{eProperty::eProperty_LineDasharray, "line-dasharray"},
+					{eProperty::eProperty_LineElevationReference, "line-elevation-reference"},
+					{eProperty::eProperty_LineEmissiveStrength, "line-emissive-strength"},
+					{eProperty::eProperty_LineGapWidth, "line-gap-width"},
+					{eProperty::eProperty_LineGradient, "line-gradient"},
+					{eProperty::eProperty_LineJoin, "line-join"},
+					{eProperty::eProperty_LineMiterLimit, "line-miter-limit"},
+					{eProperty::eProperty_LineOcclusionOpacity, "line-occlusion-opacity"},
+					{eProperty::eProperty_LineOffset, "line-offset"},
+					{eProperty::eProperty_LineOpacity, "line-opacity"},
+					{eProperty::eProperty_LinePattern, "line-pattern"},
+					{eProperty::eProperty_LineRoundLimit, "line-round-limit"},
+					{eProperty::eProperty_LineTranslate, "line-translate"},
+					{eProperty::eProperty_LineTranslateAnchor, "line-translate-anchor"},
+					{eProperty::eProperty_LineTrimColor, "line-trim-color"},
+					{eProperty::eProperty_LineTrimFadeRange, "line-trim-fade-range"},
+					{eProperty::eProperty_LineTrimOffset, "line-trim-offset"},
+					{eProperty::eProperty_LineWidth, "line-width"},
+				}};
 			};
 
 			namespace Symbol
 			{
-
+				enum class eProperty {
+					eProperty_None = 0,
+					// Icon properties
+					eProperty_IconColor,
+					eProperty_IconColorBrightnessMax,
+					eProperty_IconColorBrightnessMin,
+					eProperty_IconColorContrast,
+					eProperty_IconColorSaturation,
+					eProperty_IconEmissiveStrength,
+					eProperty_IconHaloBlur,
+					eProperty_IconHaloColor,
+					eProperty_IconHaloWidth,
+					eProperty_IconImageCrossFade,
+					eProperty_IconOcclusionOpacity,
+					eProperty_IconOpacity,
+					eProperty_IconTranslate,
+					eProperty_IconTranslateAnchor,
+					
+					// Text properties
+					eProperty_TextColor,
+					eProperty_TextEmissiveStrength,
+					eProperty_TextHaloBlur,
+					eProperty_TextHaloColor,
+					eProperty_TextHaloWidth,
+					eProperty_TextOcclusionOpacity,
+					eProperty_TextOpacity,
+					eProperty_TextTranslate,
+					eProperty_TextTranslateAnchor,
+					
+					// Shared properties
+					eProperty_SymbolZOffset,
+					eProperty_End
+				};
+		
+				constexpr std::array<EnumPair<eProperty>, static_cast<size_t>(eProperty::eProperty_End)> PAINT_PROPERTY_LIST = {{
+					{eProperty::eProperty_None, "none"},
+					// Icon
+					{eProperty::eProperty_IconColor, "icon-color"},
+					{eProperty::eProperty_IconColorBrightnessMax, "icon-color-brightness-max"},
+					{eProperty::eProperty_IconColorBrightnessMin, "icon-color-brightness-min"},
+					{eProperty::eProperty_IconColorContrast, "icon-color-contrast"},
+					{eProperty::eProperty_IconColorSaturation, "icon-color-saturation"},
+					{eProperty::eProperty_IconEmissiveStrength, "icon-emissive-strength"},
+					{eProperty::eProperty_IconHaloBlur, "icon-halo-blur"},
+					{eProperty::eProperty_IconHaloColor, "icon-halo-color"},
+					{eProperty::eProperty_IconHaloWidth, "icon-halo-width"},
+					{eProperty::eProperty_IconImageCrossFade, "icon-image-cross-fade"},
+					{eProperty::eProperty_IconOcclusionOpacity, "icon-occlusion-opacity"},
+					{eProperty::eProperty_IconOpacity, "icon-opacity"},
+					{eProperty::eProperty_IconTranslate, "icon-translate"},
+					{eProperty::eProperty_IconTranslateAnchor, "icon-translate-anchor"},
+					// Text
+					{eProperty::eProperty_TextColor, "text-color"},
+					{eProperty::eProperty_TextEmissiveStrength, "text-emissive-strength"},
+					{eProperty::eProperty_TextHaloBlur, "text-halo-blur"},
+					{eProperty::eProperty_TextHaloColor, "text-halo-color"},
+					{eProperty::eProperty_TextHaloWidth, "text-halo-width"},
+					{eProperty::eProperty_TextOcclusionOpacity, "text-occlusion-opacity"},
+					{eProperty::eProperty_TextOpacity, "text-opacity"},
+					{eProperty::eProperty_TextTranslate, "text-translate"},
+					{eProperty::eProperty_TextTranslateAnchor, "text-translate-anchor"},
+					// Shared
+					{eProperty::eProperty_SymbolZOffset, "symbol-z-offset"}
+				}};
 			};
 		};
 
@@ -184,17 +292,154 @@ namespace StyleJson
 		{
 			namespace Fill
 			{
-
+				enum class eProperty {
+					eProperty_None = 0,
+					eProperty_FillSortKey,
+					eProperty_Visibility,
+					eProperty_End
+				};
+		
+				constexpr std::array<EnumPair<eProperty>, static_cast<size_t>(eProperty::eProperty_End)> PROPERTY_LIST = {{
+					{eProperty::eProperty_None, "none"},
+					{eProperty::eProperty_FillSortKey, "fill-sort-key"},
+					{eProperty::eProperty_Visibility, "visibility"}
+				}};
 			};
 
 			namespace Line
 			{
-
+				enum class eProperty {
+					eProperty_None = 0,
+					eProperty_LineCap,
+					eProperty_LineElevationReference,
+					eProperty_LineJoin,
+					eProperty_LineMiterLimit,
+					eProperty_LineRoundLimit,
+					eProperty_LineSortKey,
+					eProperty_LineZOffset,
+					eProperty_Visibility,
+					eProperty_End
+				};
+		
+				constexpr std::array<EnumPair<eProperty>, static_cast<size_t>(eProperty::eProperty_End)> LAYOUT_PROPERTY_LIST = {{
+					{eProperty::eProperty_None, "none"},
+					{eProperty::eProperty_LineCap, "line-cap"},
+					{eProperty::eProperty_LineElevationReference, "line-elevation-reference"},
+					{eProperty::eProperty_LineJoin, "line-join"},
+					{eProperty::eProperty_LineMiterLimit, "line-miter-limit"},
+					{eProperty::eProperty_LineRoundLimit, "line-round-limit"},
+					{eProperty::eProperty_LineSortKey, "line-sort-key"},
+					{eProperty::eProperty_LineZOffset, "line-z-offset"},
+					{eProperty::eProperty_Visibility, "visibility"}
+				}};
 			};
 
 			namespace Symbol
 			{
-
+				enum class eProperty {
+					eProperty_None = 0,
+					// Icon properties
+					eProperty_IconAllowOverlap,
+					eProperty_IconAnchor,
+					eProperty_IconIgnorePlacement,
+					eProperty_IconImage,
+					eProperty_IconKeepUpright,
+					eProperty_IconOffset,
+					eProperty_IconOptional,
+					eProperty_IconPadding,
+					eProperty_IconPitchAlignment,
+					eProperty_IconRotate,
+					eProperty_IconRotationAlignment,
+					eProperty_IconSize,
+					eProperty_IconTextFit,
+					eProperty_IconTextFitPadding,
+					
+					// Text properties
+					eProperty_TextAllowOverlap,
+					eProperty_TextAnchor,
+					eProperty_TextField,
+					eProperty_TextFont,
+					eProperty_TextIgnorePlacement,
+					eProperty_TextJustify,
+					eProperty_TextKeepUpright,
+					eProperty_TextLetterSpacing,
+					eProperty_TextLineHeight,
+					eProperty_TextMaxAngle,
+					eProperty_TextMaxWidth,
+					eProperty_TextOffset,
+					eProperty_TextOptional,
+					eProperty_TextPadding,
+					eProperty_TextPitchAlignment,
+					eProperty_TextRadialOffset,
+					eProperty_TextRotate,
+					eProperty_TextRotationAlignment,
+					eProperty_TextSize,
+					eProperty_TextTransform,
+					eProperty_TextVariableAnchor,
+					eProperty_TextWritingMode,
+					
+					// Shared properties
+					eProperty_SymbolAvoidEdges,
+					eProperty_SymbolElevationReference,
+					eProperty_SymbolPlacement,
+					eProperty_SymbolSortKey,
+					eProperty_SymbolSpacing,
+					eProperty_SymbolZElevate,
+					eProperty_SymbolZOrder,
+					eProperty_Visibility,
+					eProperty_End
+				};
+		
+				constexpr std::array<EnumPair<eProperty>, static_cast<size_t>(eProperty::eProperty_End)> LAYOUT_PROPERTY_LIST = {{
+					{eProperty::eProperty_None, "none"},
+					// Icon
+					{eProperty::eProperty_IconAllowOverlap, "icon-allow-overlap"},
+					{eProperty::eProperty_IconAnchor, "icon-anchor"},
+					{eProperty::eProperty_IconIgnorePlacement, "icon-ignore-placement"},
+					{eProperty::eProperty_IconImage, "icon-image"},
+					{eProperty::eProperty_IconKeepUpright, "icon-keep-upright"},
+					{eProperty::eProperty_IconOffset, "icon-offset"},
+					{eProperty::eProperty_IconOptional, "icon-optional"},
+					{eProperty::eProperty_IconPadding, "icon-padding"},
+					{eProperty::eProperty_IconPitchAlignment, "icon-pitch-alignment"},
+					{eProperty::eProperty_IconRotate, "icon-rotate"},
+					{eProperty::eProperty_IconRotationAlignment, "icon-rotation-alignment"},
+					{eProperty::eProperty_IconSize, "icon-size"},
+					{eProperty::eProperty_IconTextFit, "icon-text-fit"},
+					{eProperty::eProperty_IconTextFitPadding, "icon-text-fit-padding"},
+					// Text
+					{eProperty::eProperty_TextAllowOverlap, "text-allow-overlap"},
+					{eProperty::eProperty_TextAnchor, "text-anchor"},
+					{eProperty::eProperty_TextField, "text-field"},
+					{eProperty::eProperty_TextFont, "text-font"},
+					{eProperty::eProperty_TextIgnorePlacement, "text-ignore-placement"},
+					{eProperty::eProperty_TextJustify, "text-justify"},
+					{eProperty::eProperty_TextKeepUpright, "text-keep-upright"},
+					{eProperty::eProperty_TextLetterSpacing, "text-letter-spacing"},
+					{eProperty::eProperty_TextLineHeight, "text-line-height"},
+					{eProperty::eProperty_TextMaxAngle, "text-max-angle"},
+					{eProperty::eProperty_TextMaxWidth, "text-max-width"},
+					{eProperty::eProperty_TextOffset, "text-offset"},
+					{eProperty::eProperty_TextOptional, "text-optional"},
+					{eProperty::eProperty_TextPadding, "text-padding"},
+					{eProperty::eProperty_TextPitchAlignment, "text-pitch-alignment"},
+					{eProperty::eProperty_TextRadialOffset, "text-radial-offset"},
+					{eProperty::eProperty_TextRotate, "text-rotate"},
+					{eProperty::eProperty_TextRotationAlignment, "text-rotation-alignment"},
+					{eProperty::eProperty_TextSize, "text-size"},
+					{eProperty::eProperty_TextTransform, "text-transform"},
+					{eProperty::eProperty_TextVariableAnchor, "text-variable-anchor"},
+					{eProperty::eProperty_TextWritingMode, "text-writing-mode"},
+					// Shared
+					{eProperty::eProperty_SymbolAvoidEdges, "symbol-avoid-edges"},
+					{eProperty::eProperty_SymbolElevationReference, "symbol-elevation-reference"},
+					{eProperty::eProperty_SymbolPlacement, "symbol-placement"},
+					{eProperty::eProperty_SymbolSortKey, "symbol-sort-key"},
+					{eProperty::eProperty_SymbolSpacing, "symbol-spacing"},
+					{eProperty::eProperty_SymbolZElevate, "symbol-z-elevate"},
+					{eProperty::eProperty_SymbolZOrder, "symbol-z-order"},
+					{eProperty::eProperty_Visibility, "visibility"}
+				}};
 			};
 		};
 
