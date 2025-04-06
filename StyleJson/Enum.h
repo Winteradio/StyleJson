@@ -92,7 +92,7 @@ namespace StyleJson
 			enum class eSubProperty
 			{
 				eProperty_None = 0,
-				eProperty_Layer,
+				eProperty_Layout,
 				eProperty_Paint,
 				eProperty_End,
 			};
@@ -128,7 +128,7 @@ namespace StyleJson
 
 			constexpr std::array<EnumPair<eSubProperty>, static_cast<size_t>(eSubProperty::eProperty_End)> SUB_PROPERTY_LIST = {{
 				{eSubProperty::eProperty_None, "none"},
-				{eSubProperty::eProperty_Layer, "layer"},
+				{eSubProperty::eProperty_Layout, "layout"},
 				{eSubProperty::eProperty_Paint, "paint"}
 			}};
 		};

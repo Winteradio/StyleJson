@@ -7,7 +7,7 @@
 namespace StyleJson
 {
 	class Expression;
-	class PropertyFeatureMap;
+	class ExpressionFeatureMap;
 
 	class Filter : public Base
 	{
@@ -17,7 +17,7 @@ namespace StyleJson
 
 		public :
 			bool Deserialize(const rapidjson::Value& _rawFilter) override;
-			bool Check(const PropertyFeatureMap& _featureMap);
+			bool Check(const ExpressionFeatureMap& _featureMap);
 
 		private :
 			std::shared_ptr<Expression> m_spExpression;

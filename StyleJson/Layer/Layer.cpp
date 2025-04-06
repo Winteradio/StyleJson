@@ -128,4 +128,36 @@ namespace StyleJson
 
 		return true;
 	}
+
+	bool Layer::DeserializeSub(const rapidjson::Value& _rawLayer)
+	{
+		for (const auto& enumPair : Enum::Layer::SUB_PROPERTY_LIST)
+		{
+			if (_rawLayer.HasMember(enumPair.strType))
+			{
+				if (Enum::Layer::eSubProperty::eProperty_Layout == enumPair.eType)
+				{
+					const auto& rawPaint = _rawLayer[enumPair.strType];
+					if (!DeserializePaint(rawPaint))
+					{
+						return false;
+					}
+				}
+				else if (Enum::Layer::eSubProperty::eProperty_Paint == enumPair.eType)
+				{
+					const auto& rawLayout = _rawLayer[enumPair.strType];
+					if (!DeserializeLayout(rawLayout))
+					{
+						return false;
+					}
+				}
+				else
+				{
+					// Nothing
+				}
+			}
+		}
+
+		return true;
+	}
 }

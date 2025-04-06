@@ -9,7 +9,7 @@
 
 namespace StyleJson
 {
-	class PropertyFeatureMap;
+	class ExpressionFeatureMap;
 	class ExpressionValue;
 
 	class Expression : public Base
@@ -30,7 +30,7 @@ namespace StyleJson
 
 		public :
 			virtual bool Deserialize(const rapidjson::Value& _rawExpression) = 0;
-			virtual const ExpressionValue Evaluate(const PropertyFeatureMap& _featureMap) = 0;
+			virtual const ExpressionValue Evaluate(const ExpressionFeatureMap& _featureMap) = 0;
 	};
 };
 

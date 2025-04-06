@@ -44,8 +44,10 @@ namespace StyleJson
 
 		protected :
 			bool DeserializeBase(const rapidjson::Value& _rawLayer);
-
-			virtual bool DeserializeSub(const rapidjson::Value& _rawLayer) = 0;
+			bool DeserializeSub(const rapidjson::Value& _rawLayer);
+			
+			virtual bool DeserializePaint(const rapidjson::Value& _rawPaint) = 0;
+			virtual bool DeserializeLayout(const rapidjson::Value& _rawLayout) = 0;
 
 		protected :
 			std::shared_ptr<Filter> m_spFilter;

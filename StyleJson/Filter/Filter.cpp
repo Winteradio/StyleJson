@@ -3,6 +3,7 @@
 #include "Expression/Expression.h"
 #include "Expression/ExpressionValue.h"
 #include "Expression/ExpressionFactory.h"
+#include "Expression/ExpressionFeatureMap.h"
 
 namespace StyleJson
 {
@@ -26,7 +27,7 @@ namespace StyleJson
 		}
 	}
 
-	bool Filter::Check(const PropertyFeatureMap& _featureMap)
+	bool Filter::Check(const ExpressionFeatureMap& _featureMap)
 	{
 		if (!m_spExpression)
 		{
@@ -34,13 +35,13 @@ namespace StyleJson
 		}
 
 		const auto expValue = m_spExpression->Evaluate(_featureMap);
-		if (!expValue.GetData().Is<bool>())
+		if (expValue.GetData().Is<bool>())
 		{
-			return false;
+			return expValue.GetData().Get<bool>();
 		}
 		else
 		{
-			return expValue.GetData().Get<bool>();
+			return false;
 		}
 	}
 }

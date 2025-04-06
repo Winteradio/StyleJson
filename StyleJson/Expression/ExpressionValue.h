@@ -18,15 +18,23 @@ namespace StyleJson
 			ExpressionValue();
 			~ExpressionValue();
 
+			bool operator==(const ExpressionValue& _other) const;
+			bool operator==(ExpressionValue&& _other) const;
+
 		public :
 			bool Deserialize(const rapidjson::Value& _rawExpressionValue) override;
 			const Data& GetData() const;
+			Data& GetData();
+
+			const bool IsValid() const;
 
 		private :
 			Data m_data;
+			bool m_valid;
 	};
 };
 
+#include <iostream>
 namespace std
 {
 	template<>

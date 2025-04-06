@@ -4,7 +4,6 @@
 #include "Layer/Layer.h"
 #include "Paint/Paint.h"
 #include "Layout/Layout.h"
-#include "Filter/Filter.h"
 
 namespace StyleJson
 {
@@ -18,7 +17,8 @@ namespace StyleJson
 			static const Enum::Layer::eType GetType();
 
 		protected :
-			bool DeserializeSub(const rapidjson::Value& _rawLayer) final;
+			bool DeserializePaint(const rapidjson::Value& _rawPaint) final;
+			bool DeserializeLayout(const rapidjson::Value& _rawLayout) final;
 
 		private :
 			std::shared_ptr<Paint::LinePaintProperty> m_spPaintProperty;

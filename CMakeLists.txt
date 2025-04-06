@@ -33,6 +33,7 @@ LIST( APPEND SRCS
 	${MAIN_DIR}/StyleJson/Style.h   			${MAIN_DIR}/StyleJson/Style.cpp
 
 	${MAIN_DIR}/StyleJson/Expression/Expression.h
+	${MAIN_DIR}/StyleJson/Expression/ExpressionFeatureMap.h
 	${MAIN_DIR}/StyleJson/Expression/ExpressionValue.h		${MAIN_DIR}/StyleJson/Expression/ExpressionValue.cpp
 	${MAIN_DIR}/StyleJson/Expression/AllExpression.h		${MAIN_DIR}/StyleJson/Expression/AllExpression.cpp
 	${MAIN_DIR}/StyleJson/Expression/GetExpression.h		${MAIN_DIR}/StyleJson/Expression/GetExpression.cpp
@@ -55,7 +56,6 @@ LIST( APPEND SRCS
 
 	${MAIN_DIR}/StyleJson/Property/Property.h
 	${MAIN_DIR}/StyleJson/Property/PropertyConverter.h
-	${MAIN_DIR}/StyleJson/Property/PropertyFeatureMap.h
 	${MAIN_DIR}/StyleJson/Property/PropertyType.h
 	${MAIN_DIR}/StyleJson/Property/PropertyValue.h
 

@@ -4,10 +4,21 @@ namespace StyleJson
 {
 	ExpressionValue::ExpressionValue()
 		: m_data()
+		, m_valid(false)
 	{}
 
 	ExpressionValue::~ExpressionValue()
 	{}
+
+	bool ExpressionValue::operator==(const ExpressionValue& _other) const
+	{
+		return m_data == _other.m_data;
+	}
+
+	bool ExpressionValue::operator==(ExpressionValue&& _other) const
+	{
+		return m_data == _other.m_data;
+	}
 
 	bool ExpressionValue::Deserialize(const rapidjson::Value& _rawExpressionValue)
 	{
@@ -70,12 +81,31 @@ namespace StyleJson
 				// Nothing
 			}
 		}
+
+		if (m_data.GetIndex() != -1)
+		{
+			m_valid = true;
+		}
+		else
+		{
+			m_valid = false;
+		}
 		
-		return (m_data.GetIndex() != -1);
+		return m_valid;
 	}
 
 	const ExpressionValue::Data& ExpressionValue::GetData() const
 	{
 		return m_data;
+	}
+
+	ExpressionValue::Data& ExpressionValue::GetData()
+	{
+		return m_data;
+	}
+
+	const bool ExpressionValue::IsValid() const
+	{
+		return m_valid;
 	}
 }

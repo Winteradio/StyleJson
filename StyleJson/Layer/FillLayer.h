@@ -15,7 +15,8 @@ namespace StyleJson
 			static const Enum::Layer::eType GetType();
 
 		protected :
-			bool DeserializeSub(const rapidjson::Value& _rawLayer) final;
+			bool DeserializePaint(const rapidjson::Value& _rawPaint) final;
+			bool DeserializeLayout(const rapidjson::Value& _rawLayout) final;
 	};
 };
 

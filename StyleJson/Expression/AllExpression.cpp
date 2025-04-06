@@ -38,9 +38,22 @@ namespace StyleJson
 		}
 	}
 
-	const ExpressionValue AllExpression::Evaluate(const PropertyFeatureMap& _featureMap)
+	const ExpressionValue AllExpression::Evaluate(const ExpressionFeatureMap& _featureMap)
 	{
+		for (const auto& spExpression : m_expressionList)
+		{
+			if (spExpression)
+			{
+				const auto expressionValue = spExpression->Evaluate(_featureMap);
 
-		return ExpressionValue();
+				if (expressionValue.IsValid())
+				{
+					return expressionValue;
+				}
+			}
+		}
+
+		static ExpressionValue nullValue;
+		return nullValue;
 	}
 }

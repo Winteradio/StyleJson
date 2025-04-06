@@ -10,15 +10,15 @@ namespace StyleJson
 	template<typename T>
 	class PropertyValue
 	{
-		using Value = wtr::Variant<Undefined, T, Expression>;
+		using Value = wtr::Variant<Undefined, T, std::shared_ptr<Expression>>;
 
 		public :
-			PropertyValue() = default;
+			PropertyValue() = delete;
 			PropertyValue(const T& _constant)
 				: m_Value(_constant)
 			{}
 
-			PropertyValue(const Expression& _expression)
+			PropertyValue(const std::shared_ptr<Expression>& _expression)
 				: m_Value(_expression)
 			{}
 
@@ -46,9 +46,9 @@ namespace StyleJson
 				return m_Value.Get<T>();
 			}
 
-			const T& Evaluate(const PropertyFeatureMap& _propertyFeatureMap)
+			const T& Evaluate(const ExpressionFeatureMap& _ExpressionFeatureMap)
 			{
-				const auto expValue = m_Value.Get<Expression>().Evaluate(_propertyFeatureMap);
+				const auto expValue = m_Value.Get<Expression>().Evaluate(_ExpressionFeatureMap);
 
 				return PropertyConverter<T>::FromExpressionValue(expValue);
 			}

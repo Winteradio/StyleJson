@@ -16,7 +16,7 @@ namespace StyleJson
 			
 		public :
 			bool Deserialize(const rapidjson::Value& _rawExpression) final;
-			const ExpressionValue Evaluate(const PropertyFeatureMap& _featureMap) final;
+			const ExpressionValue Evaluate(const ExpressionFeatureMap& _featureMap) final;
 
 		private :
 			struct stMatchEntry
@@ -32,6 +32,7 @@ namespace StyleJson
 		private :
 			std::shared_ptr<Expression> m_spInputExpression;
 			MatchEntryList m_matchEntryList;
+			ExpressionValue m_matchFallBack;
 	};
 };
 
