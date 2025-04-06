@@ -12,7 +12,7 @@ namespace StyleJson
 			virtual ~Sprite();
 
 		public :
-			bool Deserialize(const rapidjson::Value& _jsonSprite) override;
+			bool Deserialize(const rapidjson::Value& _rawSprite) override;
 	};
 };
 

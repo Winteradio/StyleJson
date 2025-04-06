@@ -8,7 +8,7 @@ namespace StyleJson
 	Sprite::~Sprite()
 	{}
 
-	bool Sprite::Deserialize(const rapidjson::Value& _jsonSprite)
+	bool Sprite::Deserialize(const rapidjson::Value& _rawSprite)
 	{
 		return false;
 	}

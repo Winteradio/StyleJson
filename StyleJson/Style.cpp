@@ -20,32 +20,60 @@ namespace StyleJson
 		{
 			if (_rawStyle.HasMember(enumPair.strType))
 			{
-				if (Enum::Root::eProperty::eProperty_Layers == enumPair.eType)
+				switch(enumPair.eType)
 				{
-					const auto& rawLayerList = _rawStyle[enumPair.strType];
-					if (rawLayerList.IsArray())
+					case Enum::Root::eProperty::eProperty_Version:
+					case Enum::Root::eProperty::eProperty_Style_Version:
+					case Enum::Root::eProperty::eProperty_Center:
+					case Enum::Root::eProperty::eProperty_Imports:
+					case Enum::Root::eProperty::eProperty_Glyphs:
+					case Enum::Root::eProperty::eProperty_Sources:
 					{
-						for (const auto& rawLayer : rawLayerList.GetArray())
+						// TODO
+						break;
+					}
+
+
+					case Enum::Root::eProperty::eProperty_Sprite:
+					{
+						std::shared_ptr<Sprite> spSprite = std::make_shared<Sprite>();
+						if (spSprite->Deserialize(_rawStyle[enumPair.strType]))
 						{
-							std::shared_ptr<Layer> spLayer = LayerFactory::GetInstance().Create(rawLayer);
-							if (spLayer && spLayer->Deserialize(rawLayer))
+							AddSprite(spSprite);
+						}
+						break;
+					}
+
+					case Enum::Root::eProperty::eProperty_Layers:
+					{
+						const auto& rawLayerList = _rawStyle[enumPair.strType];
+						if (rawLayerList.IsArray())
+						{
+							for (const auto& rawLayer : rawLayerList.GetArray())
+							{
+								std::shared_ptr<Layer> spLayer = LayerFactory::GetInstance().Create(rawLayer);
+								if (spLayer && spLayer->Deserialize(rawLayer))
+								{
+									AddLayer(spLayer);
+								}
+							}
+						}
+						else
+						{
+							std::shared_ptr<Layer> spLayer = LayerFactory::GetInstance().Create(rawLayerList);
+							if (spLayer && spLayer->Deserialize(rawLayerList))
 							{
 								AddLayer(spLayer);
 							}
 						}
+						break;
 					}
-				}
-				else if (Enum::Root::eProperty::eProperty_Sprite == enumPair.eType)
-				{
-					std::shared_ptr<Sprite> spSprite = std::make_shared<Sprite>();
-					if (spSprite->Deserialize(_rawStyle[enumPair.strType]))
+
+					default :
 					{
-						AddSprite(spSprite);
+						// Nothing
+						break;
 					}
-				}
-				else
-				{
-					// TODO
 				}
 			}
 		}
@@ -63,11 +91,11 @@ namespace StyleJson
 		return m_spSprite;
 	}
 
-	const std::shared_ptr<Layer> Style::GetLayer(const std::string& _layer) const
+	const std::shared_ptr<Layer> Style::GetLayer(const std::string& _layerID) const
 	{
 		for (const auto& layer : m_vLayers)
 		{
-			if (layer->GetID() == _layer)
+			if (layer->GetID() == _layerID)
 			{
 				return layer;
 			}
@@ -82,7 +110,10 @@ namespace StyleJson
 
 	void Style::AddLayer(std::shared_ptr<Layer> _spLayer)
 	{
-		m_vLayers.push_back(_spLayer);
+		if (_spLayer)
+		{
+			m_vLayers.push_back(_spLayer);
+		}
 	}
 
 	void Style::AddSprite(std::shared_ptr<Sprite> _spSprite)

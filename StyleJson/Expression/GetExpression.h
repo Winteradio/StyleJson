@@ -12,8 +12,12 @@ namespace StyleJson
 			~GetExpression();
 			
 		public :
-			bool Deserialize(const rapidjson::Value& _jsonValue) final;
-			Value Evaluate(const PropertyMap& _propertyMap) final;
+			bool Deserialize(const rapidjson::Value& _rawExpression) final;
+			Value Evaluate(const PropertyFeatureMap& _featureMap) final;
+
+		private :
+			Value m_Key;
+			Value m_Value;
 	};
 };
 

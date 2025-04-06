@@ -15,7 +15,7 @@ namespace StyleJson
 		return Enum::Layer::eType::eType_Fill;
 	}
 
-	bool FillLayer::Deserialize(const rapidjson::Value& _jsonLayer)
+	bool FillLayer::DeserializeSub(const rapidjson::Value& _rawLayer)
 	{
 		return false;
 	}

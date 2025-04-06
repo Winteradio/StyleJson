@@ -14,8 +14,8 @@ namespace StyleJson
 		public :
 			static const Enum::Layer::eType GetType();
 
-		public :
-			bool Deserialize(const rapidjson::Value& _jsonLayer) final;
+		protected :
+			bool DeserializeSub(const rapidjson::Value& _rawLayer) final;
 	};
 };
 

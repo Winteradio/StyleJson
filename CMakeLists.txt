@@ -54,7 +54,7 @@ LIST( APPEND SRCS
 
 	${MAIN_DIR}/StyleJson/Property/Property.h
 	${MAIN_DIR}/StyleJson/Property/PropertyConverter.h
-	${MAIN_DIR}/StyleJson/Property/PropertyMap.h
+	${MAIN_DIR}/StyleJson/Property/PropertyFeatureMap.h
 	${MAIN_DIR}/StyleJson/Property/PropertyType.h
 	${MAIN_DIR}/StyleJson/Property/PropertyValue.h
 

@@ -11,19 +11,28 @@ namespace StyleJson
 	Filter::~Filter()
 	{}
 
-	bool Filter::Deserialize(const rapidjson::Value& _jsonFilter)
+	bool Filter::Deserialize(const rapidjson::Value& _rawFilter)
 	{
-		return false;
+		std::shared_ptr<Expression> spExpression = ExpressionFactory::GetInstance().Create(_rawFilter);
+		if (spExpression && spExpression->Deserialize(_rawFilter))
+		{
+			m_spExpression = spExpression;
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
-	bool Filter::Check(const PropertyMap& _propertyMap)
+	bool Filter::Check(const PropertyFeatureMap& _featureMap)
 	{
 		if (!m_spExpression)
 		{
 			return false;
 		}
 
-		const auto expValue = m_spExpression->Evaluate(_propertyMap);
+		const auto expValue = m_spExpression->Evaluate(_featureMap);
 		if (!expValue.Is<bool>())
 		{
 			return false;

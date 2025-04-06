@@ -17,7 +17,8 @@ namespace StyleJson
 		public :
 			static const Enum::Layer::eType GetType();
 
-			bool Deserialize(const rapidjson::Value& _jsonLayer) final;
+		protected :
+			bool DeserializeSub(const rapidjson::Value& _rawLayer) final;
 
 		private :
 			std::shared_ptr<Paint::LinePaintProperty> m_spPaintProperty;

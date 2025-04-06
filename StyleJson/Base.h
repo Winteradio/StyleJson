@@ -14,7 +14,7 @@ namespace StyleJson
 			virtual ~Base() {};
 
 		public :
-			virtual bool Deserialize(const rapidjson::Value& _jsonValue) = 0;
+			virtual bool Deserialize(const rapidjson::Value& _rawLayer) = 0;
 	};
 };
 

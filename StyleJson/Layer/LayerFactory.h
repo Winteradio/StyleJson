@@ -18,7 +18,7 @@ namespace StyleJson
 			static LayerFactory& GetInstance();
 
 		public :
-			std::shared_ptr<Layer> Create(const rapidjson::Value& _jsonLayer) final;
+			std::shared_ptr<Layer> Create(const rapidjson::Value& _rawLayer) final;
 	};
 };
 

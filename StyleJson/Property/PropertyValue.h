@@ -2,7 +2,6 @@
 #define __STYLEJSON_PROPERTYVALUE_H__
 
 #include "Base.h"
-#include "Variant/Variant.h"
 #include "Expression/Expression.h"
 #include "Property/PropertyConverter.h"
 
@@ -47,11 +46,11 @@ namespace StyleJson
 				return m_Value.Get<T>();
 			}
 
-			const T& Evaluate(const PropertyMap& _propertyMap)
+			const T& Evaluate(const PropertyFeatureMap& _propertyFeatureMap)
 			{
-				const auto expValue = m_Value.Get<Expression>().Evaluate(_propertyMap);
+				const auto expValue = m_Value.Get<Expression>().Evaluate(_propertyFeatureMap);
 
-				return PropertyConverter<Color>::FromExpressionValue(expValue);
+				return PropertyConverter<T>::FromExpressionValue(expValue);
 			}
 
 		private :

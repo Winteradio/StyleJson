@@ -16,39 +16,61 @@ namespace StyleJson
 		return instance;
 	}
 
-	std::shared_ptr<Layer> LayerFactory::Create(const rapidjson::Value& _jsonLayer)
+	std::shared_ptr<Layer> LayerFactory::Create(const rapidjson::Value& _rawLayer)
 	{
-		const size_t propertyIndex = static_cast<size_t>(Enum::Layer::eProperty::eProperty_Type);
-		const char* strProperty = Enum::Layer::PROPERTY_LIST[propertyIndex].strType;
-		if (_jsonLayer.HasMember(strProperty))
+		const size_t typeIndex = static_cast<size_t>(Enum::Layer::eProperty::eProperty_Type);
+		const char* strType = Enum::Layer::PROPERTY_LIST[typeIndex].strType;
+		if (_rawLayer.HasMember(strType))
 		{
-			const auto& jsonType = _jsonLayer[strProperty];
+			const auto& jsonType = _rawLayer[strType];
 			if (!jsonType.IsString())
 			{
 				return nullptr;
 			}
 
 			const std::string strLayerType = jsonType.GetString();
-			for (const auto& typePair : Enum::Layer::TYPE_LIST)
+			for (const auto& enumPair : Enum::Layer::TYPE_LIST)
 			{
-				if (strLayerType == std::string(typePair.strType))
+				if (strLayerType == std::string(enumPair.strType))
 				{
-					if (Enum::Layer::eType::eType_Line == typePair.eType)
+					switch (enumPair.eType)
 					{
-						return std::make_shared<LineLayer>();
-					}
-					else if (Enum::Layer::eType::eType_Fill == typePair.eType)
-					{
-						return std::make_shared<FillLayer>();
-					}
-					else if (Enum::Layer::eType::eType_Symbol == typePair.eType)
-					{
-						return std::make_shared<SymbolLayer>();
-					}
-					else
-					{
-						// TODO
-						return nullptr;
+						case Enum::Layer::eType::eType_Circle:
+						case Enum::Layer::eType::eType_Heatmap:
+						case Enum::Layer::eType::eType_FillExtrusion:
+						case Enum::Layer::eType::eType_Raster:
+						case Enum::Layer::eType::eType_RasterParticle:
+						case Enum::Layer::eType::eType_Hillshade:
+						case Enum::Layer::eType::eType_Model:
+						case Enum::Layer::eType::eType_Background:
+						case Enum::Layer::eType::eType_Sky:
+						case Enum::Layer::eType::eType_Slot:
+						case Enum::Layer::eType::eType_Clip:
+						{
+							// TODO
+							return nullptr;
+						}
+
+						case Enum::Layer::eType::eType_Fill:
+						{
+							return std::make_shared<FillLayer>();
+						}
+
+						case Enum::Layer::eType::eType_Line:
+						{
+							return std::make_shared<LineLayer>();
+						}
+
+						case Enum::Layer::eType::eType_Symbol:
+						{
+							return std::make_shared<SymbolLayer>();
+						}
+						
+						default :
+						{
+							// Nothing
+							return nullptr;
+						}
 					}
 				}
 			}

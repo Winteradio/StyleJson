@@ -18,7 +18,7 @@ namespace StyleJson
 			static ExpressionFactory& GetInstance();
 
 		public :
-			std::shared_ptr<Expression> Create(const rapidjson::Value& _jsonExpression);
+			std::shared_ptr<Expression> Create(const rapidjson::Value& _rawExpression) override;
 	};
 };
 

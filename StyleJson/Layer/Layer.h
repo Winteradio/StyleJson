@@ -26,14 +26,26 @@ namespace StyleJson
 			static const Enum::Layer::eType GetType();
 
 		public :
+			bool Deserialize(const rapidjson::Value& _rawLayer) override;
+
 			const std::string& GetID() const;
 			const std::string& GetSourceID() const;
 			const std::string& GetSourceLayer() const;
+			const int GetMinZoom() const;
+			const int GetMaxZoom() const;
 
 			const std::shared_ptr<Filter> GetFilter() const;
 
-			void SetSourceLayer(const std::string& _sourceLayer);
+			void SetID(const std::string& _layerID);
 			void SetSourceID(const std::string& _sourceID);
+			void SetSourceLayer(const std::string& _sourceLayer);
+			void SetMinZoom(const int _minZoom);
+			void SetMaxZoom(const int _maxZoom);
+
+		protected :
+			bool DeserializeBase(const rapidjson::Value& _rawLayer);
+
+			virtual bool DeserializeSub(const rapidjson::Value& _rawLayer) = 0;
 
 		protected :
 			std::shared_ptr<Filter> m_spFilter;
@@ -42,6 +54,9 @@ namespace StyleJson
 			std::string m_strID;
 			std::string m_strSourceID;
 			std::string m_strSourceLayer;
+
+			int m_nMinZoom;
+			int m_nMaxZoom;
 	};
 };
 
