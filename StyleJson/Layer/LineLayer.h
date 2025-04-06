@@ -15,6 +15,10 @@ namespace StyleJson
 
 		public :
 			static const Enum::Layer::eType GetType();
+			const Paint::LinePaintColor GetLineColor(const ExpressionFeatureMap& _featureMap) const;
+			const Paint::LinePaintWidth GetLineWidth(const ExpressionFeatureMap& _featureMap) const;
+			
+			const Layout::LineSortKey GetLineSortKey(const ExpressionFeatureMap& _featureMap) const;
 
 		protected :
 			bool DeserializePaint(const rapidjson::Value& _rawPaint) final;

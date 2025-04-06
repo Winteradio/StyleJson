@@ -20,12 +20,14 @@ namespace StyleJson
 	{
 		static Color FromExpressionValue(const ExpressionValue& _value)
 		{
+			Color color;
+
 			if (_value.GetData().Is<std::string>())
 			{
-
+				const auto& rawColor = _value.GetData().Get<std::string>();
 			}
 
-			return Color();
+			return color;
 		}
 	};
 };
